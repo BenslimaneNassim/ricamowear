@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    {% load static %}
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+  <title>RicamoWear Oficial Website</title>
+  <meta content="" name="description">
+  <meta content="" name="keywords">
+
+  <!-- Favicons -->
+  <link href="{% static 'img/logo.jpg' %}" rel="icon">
+  <link href="{% static 'img/apple-touch-icon.png' %}" rel="apple-touch-icon">
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,700,700i|Poppins:300,400,500,700" rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="{% static 'vendor/aos/aos.css' %}" rel="stylesheet">
+  <link href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+  <link href="{% static 'vendor/bootstrap-icons/bootstrap-icons.css' %}" rel="stylesheet">
+  <link href="{% static 'vendor/boxicons/css/boxicons.min.css' %}" rel="stylesheet">
+  <link href="{% static 'vendor/glightbox/css/glightbox.min.css' %}" rel="stylesheet">
+  <link href="{% static 'vendor/swiper/swiper-bundle.min.css' %}" rel="stylesheet">
+
+  <!-- Template Main CSS File -->
+  <link href="{% static 'css/style.css' %}" rel="stylesheet">
+  <style>
+    #note{
+      display:none;
+    }
+    #care{
+      display:none;
+    }
+    #portfolio-details-2{
+        display:none;
+      }
+      #portfolio-details{
+        display:block;
+      }
+
+    @media (max-width: 768px) {
+
+      .prev, .next {
+        display: block!important;
+        cursor: pointer;
+        position: absolute;
+        top: 50%;
+       width: auto;
+       padding: 16px;
+        margin-top: -22px;
+       color: white;
+        font-weight: bold;
+        font-size: 18px;
+        transition: 0.6s ease;
+       border-radius: 0 3px 3px 0;
+       user-select: none;
+      }
+
+      #portfolio-details{
+        display:none;
+      }
+      #portfolio-details-2{
+        display:block;
+      }
+
+/* Position the "next button" to the right */
+.next {
+  right: 0;
+  border-radius: 3px 0 0 3px;
+}
+
+/* On hover, add a black background color with a little bit see-through */
+.prev:hover, .next:hover {
+  background-color: rgba(0,0,0,0.8);
+}
+
+    }
+    .prev, .next{
+      display:none;
+    }
+  </style>
+</head>
+
+<body>
+        <div id="id01" class="modal">
+                <button style="margin-right:20px;text-decoration:none;background: transparent;border:0;padding:0;margin:0; float:right;" onclick="document.getElementById('id01').style.display='none'"><i style="font-size:35px;" class="bi bi-x"></i></button><!--dayi a zbou b-->
+                <form class="modal-content animate" action="#" method="POST">{% csrf_token %}
+              
+                  <div class="search-container">
+        
+                    
+                    <input style="margin-right: 0;" type="text" placeholder="Recherche" name="search" required>     
+                           
+                    <button style="text-decoration:none;background: transparent;border:0;padding:0;margin-left:0;width:20px;" type="submit"><i style="margin-right:10px" class="bi bi-search"></i></button>
+        
+        
+                    
+                  </div>
+                  <hr style="width: 80%;">
+                  
+                </form>
+              </div>
+  <!-- ======= Header ======= -->
+  <header id="header" class="fixed-top d-flex align-items-center header-transparent">
+      <div class="container d-flex justify-content-between align-items-center" style="max-width:100%; margin-top:25px">
+  
+        
+  
+        <nav id="navbar" class="navbar">
+          <ul>
+            <li><a class="nav-link scrollto active" href="{% url 'index'%}">Home</a></li>
+            <li><a class="nav-link scrollto" href="{% url 'brand'%}">About Us</a></li>
+            <li class="dropdown"><a href="#"><span>Catégories</span> <i class="bi bi-chevron-down"></i></a>
+              <ul>
+                <li class="dropdown"><a href="#">Accessories</a>
+                  <ul>
+                      {% for acc in acc_categories %}{% with accessories="Accessories" %}
+                      <li><a href="{% url 'category' accessories acc %}">{{acc}}</a></li>{% endwith %}
+                      {% endfor %}
+                    </ul>
+                </li>
+                <li class="dropdown"><a href="#"><span>Cloths</span> <i class="bi bi-chevron-right"></i></a>
+                  <ul>
+                    {% for clo in clo_categories %}{% with cloths="Cloths" %}
+                    <li><a href="{% url 'category' cloths clo %}">{{clo}}</a></li>{% endwith %}
+                    {% endfor %}
+                  </ul>
+                </li>
+              </ul>
+            </li>
+            <li class="dropdown"><a href="{% url 'design' %}"><span>Designs</span> <i class="bi bi-chevron-down"></i></a>
+              <ul>
+                <li><a href="{% url 'design' %}">All</a></li>
+                {% for design in designs_link %}
+                <li><a href="{% url 'product' design.1.name %}">{{design.0.name}}</a></li>
+                {% endfor %}            
+              </ul>
+            </li>
+            <li><a class="nav-link scrollto" href="#footer">Contact</a></li>
+          </ul>
+          <i class="bi bi-list mobile-nav-toggle" style="text-align:left"></i>
+        </nav><!-- .navbar -->
+  
+        <div id="logo">
+          <!--<a href="{% url 'index'%}"><img src="{% static % 'img/logo.png' }" alt=""></a>  -->
+          <!-- Uncomment below if you prefer to use a text logo -->
+          <h1 class="special-ricamo"><a href="{% url 'index'%}">ricamo wear</a></h1>
+        </div>
+        <nav id="navbar" class="navbar">
+          <div style="display:flex">
+          <button style="text-decoration:none;background: transparent;border:0;padding:0;margin:0;" onclick="document.getElementById('id01').style.display='block'"><i style="margin-right:10px" class="bi bi-search mobile-nav-toggle"></i></button><!--dayi a zbou b-->
+          <!--<i style="margin-left:10px" class="bi bi-cart mobile-nav-toggle"></i>-->
+          </div>
+        </nav>
+      </div>
+      
+    </header><!-- End Header -->
+        
+          
+
+  <main id="main">
+
+    <!-- ======= Breadcrumbs Section ======= -->
+      
+          <section id="portfolio-details" class="portfolio-details">
+                <div id="container-fluid" class="container-fluid">
+          
+                  <div id="contains" class="contains">
+
+                      <div id="souffri" class="slideshow-container" style="width:100%">
+                        <div id="test1" class="contains-images">
+
+                          <div class="image-portfolio">
+                              <img src="{{product.image.url}}" alt="">
+                          </div>
+                          {% for image in images %}
+                          <div class="image-portfolio">
+                                <img src="{{image.image.url}}" alt="">
+                          </div>
+                          {% endfor %}
+                          
+                            
+                        </div>
+                        <div id="test2" class="swiper-pagination"></div>
+                      </div>
+
+                      <div class="contains-text">
+                          <div class="sticky-shit">
+                            <div class="product-description">
+                                    
+                                    <h3 style="font-weight:300">{{product.name}} | {{product.category}}</h3>
+                                    <h3 class="price">{% if product.discounted_price %}<del>{{product.price}} DA</del> {{product.discounted_price}} {% else %} {{product.price}} {% endif %}  DA </h3><br><br>
+                                    <h5 style="font-weight: 400;font-size: 18px">Size</h5>
+                                    <h3 class="price" style="font-size: 18px">{% if product.s_size %} S &nbsp &nbsp{% endif %} {% if product.m_size %} M &nbsp &nbsp{% endif %} {% if product.l_size %} L &nbsp &nbsp{% endif %} {% if product.xl_size %} XL &nbsp &nbsp{% endif %} {% if product.xxl_size %} XXL &nbsp &nbsp{% endif %}  {% if product.standart_size %} Standart &nbsp &nbsp{% endif %}</h3>
+                                    <button onclick="window.location='checkout'" class="buy-now">BUY NOW</button><br><br><br>
+                                    <div class="d-flex justify-content-between"><button onclick="document.getElementById('description').style.display='block';document.getElementById('note').style.display='none';document.getElementById('care').style.display='none'" class="roh-froutt"><h5 class="h5-product">Description</h5></button>{% if product.note %}<button onclick="document.getElementById('description').style.display='none';document.getElementById('note').style.display='block';document.getElementById('care').style.display='none'" class="roh-froutt"><h5 class="h5-product">Note</h5></button>{% endif %}{% if product.care %}<button onclick="document.getElementById('description').style.display='none';document.getElementById('note').style.display='none';document.getElementById('care').style.display='block'" class="roh-froutt"><h5 class="h5-product">Care</h5></button>{% endif %}</div>
+                                    <div id="description"><p class="price" style="font-size: 20px">{{product.description|linebreaks}}</p></div>
+                                    <div id="note"><p class="price" style="font-size: 20px">{{product.note|linebreaks}}</p></div>
+                                    <div id="care"><p class="price" style="font-size: 20px">{{product.care|linebreaks}}</p></div>
+                                    
+
+
+
+                            </div>
+                                
+                          </div>
+                          
+                      </div>
+                  </div>
+          
+                </div>
+              </section><!-- End Portfolio Details Section -->
+
+
+
+
+
+
+              <section id="portfolio-details-2" class="portfolio-details">
+                <div class="container">
+          
+                  <div class="row gy-4">
+          
+                    <div class="col-lg-8">
+                      <div class="portfolio-details-slider swiper">
+                        <div class="swiper-wrapper align-items-center">
+          
+                          <div class="swiper-slide">
+                            <img src="{{product.image.url}}" alt="">
+                          </div>
+                          {% for image in images %}
+                          <div class="swiper-slide">
+                            <img src="{{image.image.url}}" alt="">
+                          </div>
+                          {% endfor %}
+                          
+          
+                        </div>
+                        <div class="swiper-pagination"></div>
+                      </div>
+                    </div>
+          
+                    <div class="col-lg-5">
+                      <div class="contains-text">
+                        <div class="sticky-shit">
+                            <div class="product-description" style="padding-right:10px;padding-left:10px;">
+                                <h3 style="font-weight:300">{{product.name}} | {{product.category}}</h3>
+                                <h3 class="price">{% if product.discounted_price %}<del>{{product.price}} DA</del> {{product.discounted_price}} {% else %} {{product.price}} {% endif %}  DA </h3><br><br>
+                                <h5 style="font-weight: 400;font-size: 18px">Size</h5>
+                                <h3 class="price" style="font-size: 18px">{% if product.s_size %} S &nbsp &nbsp{% endif %} {% if product.m_size %} M &nbsp &nbsp{% endif %} {% if product.l_size %} L &nbsp &nbsp{% endif %} {% if product.xl_size %} XL &nbsp &nbsp{% endif %} {% if product.xxl_size %} XXL &nbsp &nbsp{% endif %}  {% if product.standart_size %} Standart &nbsp &nbsp{% endif %}</h3>
+                                <button onclick="window.location='checkout'" class="buy-now">BUY NOW</button><br><br><br>
+                                <div class="d-flex justify-content-between"><button onclick="document.getElementById('description').style.display='block';document.getElementById('note').style.display='none';document.getElementById('care').style.display='none'" class="roh-froutt"><h5 class="h5-product">Description</h5></button>{% if product.note %}<button onclick="document.getElementById('description').style.display='none';document.getElementById('note').style.display='block';document.getElementById('care').style.display='none'" class="roh-froutt"><h5 class="h5-product">Note</h5></button>{% endif %}{% if product.care %}<button onclick="document.getElementById('description').style.display='none';document.getElementById('note').style.display='none';document.getElementById('care').style.display='block'" class="roh-froutt"><h5 class="h5-product">Care</h5></button>{% endif %}</div>
+                                <div id="description"><p class="price" style="font-size: 20px">{{product.description|linebreaks}}</p></div>
+                                <div id="note"><p class="price" style="font-size: 20px">{{product.note|linebreaks}}</p></div>
+                                <div id="care"><p class="price" style="font-size: 20px">{{product.care|linebreaks}}</p></div>
+                                
+
+
+
+                        </div>
+                              
+                        </div>
+                        
+                    </div>
+                    </div>
+          
+                  </div>
+          
+                </div>
+              </section><!-- End Portfolio Details Section -->
+          
+  </main><!-- End #main -->
+  
+
+  <!-- ======= Footer ======= -->
+  
+  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+  <!-- Vendor JS Files -->
+  <script src="{% static 'vendor/purecounter/purecounter.js' %}"></script>
+  <script src="{% static 'vendor/aos/aos.js' %}"></script>
+  <script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+  <script src="{% static 'vendor/glightbox/js/glightbox.min.js' %}"></script>
+  <script src="{% static 'vendor/isotope-layout/isotope.pkgd.min.js' %}"></script>
+  <script src="{% static 'vendor/swiper/swiper-bundle.min.js' %}"></script>
+  <script src="{% static 'vendor/php-email-form/validate.js' %}"></script>
+  <!-- Template Main JS File -->
+  <script src="{% static 'js/main.js' %}"></script>
+
+  
+
+</body>
+
+</html>

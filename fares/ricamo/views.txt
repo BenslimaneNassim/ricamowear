@@ -1,0 +1,13 @@
+size = request.POST.get('size')
+                    product = Product.objects.get(name=product_name)
+                    com = Commande()
+                    com.product = product
+                    com.size = size
+                    com.nom = form.cleaned_data.get('nom')
+                    com.prénom = form.cleaned_data.get('prénom')
+                    com.wilaya = form.cleaned_data.get('wilaya')
+                    com.ville = form.cleaned_data.get('ville')
+                    com.adresse = form.cleaned_data.get('adresse')
+                    com.numero = form.cleaned_data.get('numero')
+                    com.optionel = form.cleaned_data.get('optionel')
+                    com.save()
