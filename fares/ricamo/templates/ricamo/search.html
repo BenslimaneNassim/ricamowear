@@ -1,111 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
+{% extends 'ricamo/base.html' %}
     {% load static %}
-  <meta charset="utf-8">
-  <meta content="width=device-width, initial-scale=1.0" name="viewport">
-
-  <title>RicamoWear Oficial Website</title>
-  <meta content="" name="description">
-  <meta content="" name="keywords">
-
-  <!-- Favicons -->
-  <link href="{% static 'img/logo.jpg' %}" rel="icon">
-  <link href="{% static 'img/apple-touch-icon.png' %}" rel="apple-touch-icon">
-
-  <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,700,700i|Poppins:300,400,500,700" rel="stylesheet">
-
-  <!-- Vendor CSS Files -->
-  <link href="{% static 'vendor/aos/aos.css' %}" rel="stylesheet">
-  <link href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
-  <link href="{% static 'vendor/bootstrap-icons/bootstrap-icons.css' %}" rel="stylesheet">
-  <link href="{% static 'vendor/boxicons/css/boxicons.min.css' %}" rel="stylesheet">
-  <link href="{% static 'vendor/glightbox/css/glightbox.min.css' %}" rel="stylesheet">
-  <link href="{% static 'vendor/swiper/swiper-bundle.min.css' %}" rel="stylesheet">
-
-  <!-- Template Main CSS File -->
-  <link href="{% static 'css/style.css' %}" rel="stylesheet">
-
-</head>
-
-<body>
-        <div id="id01" class="modal">
-                <button style="margin-right:20px;text-decoration:none;background: transparent;border:0;padding:0;margin:0; float:right;" onclick="document.getElementById('id01').style.display='none'"><i style="font-size:35px;" class="bi bi-x"></i></button><!--dayi a zbou b-->
-                <form class="modal-content animate" action="#" method="POST">{% csrf_token %}
-              
-                  <div class="search-container">
-        
-                    
-                    <input style="margin-right: 0;" type="text" placeholder="Recherche" name="search" required>     
-                           
-                    <button style="text-decoration:none;background: transparent;border:0;padding:0;margin-left:0;width:20px;" type="submit"><i style="margin-right:10px" class="bi bi-search"></i></button>
-        
-        
-                    
-                  </div>
-                  <hr style="width: 80%;">
-                  
-                </form>
-              </div>
-  <!-- ======= Header ======= -->
-  <header id="header" class="fixed-top d-flex align-items-center header-transparent">
-      <div class="container d-flex justify-content-between align-items-center" style="max-width:100%; margin-top:25px">
-  
-        
-  
-        <nav id="navbar" class="navbar">
-          <ul>
-            <li><a class="nav-link scrollto active" href="{% url 'index'%}">Home</a></li>
-            <li><a class="nav-link scrollto" href="{% url 'brand'%}">About Us</a></li>
-            <li class="dropdown"><a href="#"><span>Catégories</span> <i class="bi bi-chevron-down"></i></a>
-              <ul>
-                <li class="dropdown"><a href="#">Accessories</a>
-                  <ul>
-                      {% for acc in acc_categories %}{% with accessories="Accessories" %}
-                      <li><a href="{% url 'category' accessories acc %}">{{acc}}</a></li>{% endwith %}
-                      {% endfor %}
-                    </ul>
-                </li>
-                <li class="dropdown"><a href="#"><span>Cloths</span> <i class="bi bi-chevron-right"></i></a>
-                  <ul>
-                    {% for clo in clo_categories %}{% with cloths="Cloths" %}
-                    <li><a href="{% url 'category' cloths clo %}">{{clo}}</a></li>{% endwith %}
-                    {% endfor %}
-                  </ul>
-                </li>
-              </ul>
-            </li>
-            <li class="dropdown"><a href="{% url 'design' %}"><span>Designs</span> <i class="bi bi-chevron-down"></i></a>
-              <ul>
-                <li><a href="{% url 'design' %}">All</a></li>
-                {% for design in designs_link %}
-                <li><a href="{% url 'product' design.1.name %}">{{design.0.name}}</a></li>
-                {% endfor %}            
-              </ul>
-            </li>
-            <li><a class="nav-link scrollto" href="#footer">Contact</a></li>
-          </ul>
-          <i class="bi bi-list mobile-nav-toggle" style="text-align:left"></i>
-        </nav><!-- .navbar -->
-  
-        <div id="logo">
-          <!--<a href="{% url 'index'%}"><img src="{% static % 'img/logo.png' }" alt=""></a>  -->
-          <!-- Uncomment below if you prefer to use a text logo -->
-          <h1 class="special-ricamo"><a href="{% url 'index'%}">ricamo wear</a></h1>
-        </div>
-        <nav id="navbar" class="navbar">
-          <div style="display:flex">
-          <button style="text-decoration:none;background: transparent;border:0;padding:0;margin:0;" onclick="document.getElementById('id01').style.display='block'"><i style="margin-right:10px" class="bi bi-search mobile-nav-toggle"></i></button><!--dayi a zbou b-->
-          <!--<i style="margin-left:10px" class="bi bi-cart mobile-nav-toggle"></i>-->
-          </div>
-        </nav>
-      </div>
-      
-    </header><!-- End Header -->
-        
-          <!-- ======= Hero Section ======= -->
+{% block hero %}          <!-- ======= Hero Section ======= -->
           <section id="hero" style="height: 35vh;background: url({% static 'img/art.webp'%}) center;background-size: cover;
           position: relative;">
             <div class="hero-container" data-aos="zoom-in" data-aos-delay="100">
@@ -113,7 +8,8 @@
               <h1 style="font-family : RothekExtraLight; color : #fff"> find your art </h1>
             </div>
           </section><!-- End Hero Section -->
-
+{% endblock %}
+{% block main %}
   <main id="main">
 
               <section id="team">
@@ -131,81 +27,25 @@
                     </div>
                     <div class="row">
                         {% for product in products %}
-                        <div class="col-lg-4 col-md-5">
-                          <a style="color:black" href="{% url 'product' product.name %}"><div class="member" data-aos="fade-up" data-aos-delay="200">
-                            <div class="pic"><img src="{{product.image.url}}" alt=""></div>
+                        <div class="col-lg-4 col-md-5 col-sm-4 col-6">
+                          <a style="color:black" href="{% url 'product' product.name %}"><div class="member" data-aos="fade" data-aos-delay="100">
+                            <div class="pic" style="background-image:url({{product.image.url}})"><!--<img src="{{product.image.url}}" alt="">--></div>
                             <h4 style="text-transform: uppercase;">{{product.name}} | {{product.category}}</h4>
-                            <span>{{product.price}} DA</span>
+                            {% if product.discounted_price %}
+                              <span class="price-col"><del>{{product.price}} DA</del> {{product.discounted_price}} DA</span>
+                            {% else %}
+                              <span class="price-col">{{product.price}} DA</span>
+              
+                            {% endif %}
+              
                             
                           </div></a>
                         </div>
                         {% endfor %}
-                        
-              
-                        
                       </div>
               
                   </div>
                 </section><!-- End Team Section -->
             
   </main><!-- End #main -->
-
-  <!-- ======= Footer ======= -->
-  <footer id="footer">
-    <div class="footer-top">
-      <div class="container">
-          <div class="row justify-content-around d-flex">
-            <div class="col-lg-4 col-md-5" style="margin-bottom:25px;">
-
-              <h6 class="footer-title">Subscribe to our Newsletter !</h6>
-              <form class="d-flex">
-                <input style="margin-right: 0;width:80%" type="text" placeholder="Enter Email" name="email" required>     
-                <button type="submit"><i class="bi bi-arrow-right"></i></button>
-              </form>
-              <hr style="width: 85%;float: left">
-            </div>
-            <div class="col-lg-4 col-md-5" style="margin-bottom:25px;">
-                <h6 class="footer-title d-flex justify-content-center">Follow us</h6><br>
-                <div class="d-flex  justify-content-center justify-content-around">
-                  <a target="blank" href="https://www.facebook.com/ricamowear/"><i style="font-size:22px;" class="bi bi-facebook"></i></a>
-                  <a target="blank" href="https://www.instagram.com/ricamowear/"><i style="font-size:22px;" class="bi bi-instagram"></i></a>
-                  <a target="blank" href="https://www.tiktok.com/@ricamowear"><i style="font-size:22px;" class="bi bi-tiktok"></i></a>
-                  <a target="blank" href="mailto:ricamowear@gmail.com"><i style="font-size:22px;" class="bi bi-google"></i></a>
-
-
-                </div>
-            </div>
-            <div class="col-lg-4 col-md-5" style="margin-bottom:25px;">
-                <h6 class="footer-title d-flex justify-content-center">Website Developper</h6>
-                <a class="d-flex justify-content-center" target="blank" href="https://benslimanenassim.github.io/"><h6>Benslimane Nassim</h6></a>
-              </div>
-          </div>
-      </div>
-    </div>
-
-    <div class="container">
-      <div class="copyright">
-        &copy; Copyright <strong>RicamoWear</strong>. All Rights Reserved
-      </div>
-      <div class="credits">
-      </div>
-    </div>
-  </footer><!-- End Footer -->
-
-  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
-
-  <!-- Vendor JS Files -->
-  <script src="{% static 'vendor/purecounter/purecounter.js' %}"></script>
-  <script src="{% static 'vendor/aos/aos.js' %}"></script>
-  <script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
-  <script src="{% static 'vendor/glightbox/js/glightbox.min.js' %}"></script>
-  <script src="{% static 'vendor/isotope-layout/isotope.pkgd.min.js' %}"></script>
-  <script src="{% static 'vendor/swiper/swiper-bundle.min.js' %}"></script>
-  <script src="{% static 'vendor/php-email-form/validate.js' %}"></script>
-  <!-- Template Main JS File -->
-  <script src="{% static 'js/main.js' %}"></script>
-
-
-</body>
-
-</html>
+  {% endblock %}

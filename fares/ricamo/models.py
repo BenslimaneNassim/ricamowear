@@ -4,6 +4,8 @@ from django.core.exceptions import ValidationError
 from PIL import Image
 from datetime import datetime
 from phonenumber_field.modelfields import PhoneNumberField
+from django_resized import ResizedImageField
+from colorfield.fields import ColorField
 
 
 TYPES = (
@@ -84,20 +86,25 @@ WILAYAS = (
 )
 
 
-class Design(models.Model):
-    name = models.CharField(max_length=30)
-    date_upload = models.DateField(auto_now_add=True, blank=True,null=True)
-    image = models.ImageField(upload_to="designs/",blank=True,null=True)
+#class Design(models.Model):
+ #   name = models.CharField(max_length=30)
+  #  date_upload = models.DateField(auto_now_add=True, blank=True,null=True)
+   # image = models.ImageField(upload_to="designs/",blank=True,null=True)
+    #def __str__(self):
+     #   return self.name
+class Category(models.Model):
+    name = models.CharField( choices = CATEGORIES, max_length=30)
+    image = models.ImageField(upload_to="category-images-display/")
     def __str__(self):
         return self.name
+
 class Product(models.Model):
-    design = models.ForeignKey(Design, on_delete = models.CASCADE)
     name = models.CharField(max_length=30)
-    image = models.ImageField(upload_to="product-images-display/")
+    image = models.ImageField(upload_to="product-images-display/", )
     description = models.TextField(max_length=900,null=True,blank=True)
     note = models.TextField(max_length=900,null=True,blank=True)
     care = models.TextField(max_length=900,null=True,blank=True)
-    category = models.CharField(choices = CATEGORIES, max_length=8)
+    category = models.ForeignKey(Category, on_delete= models.SET_NULL,null=True,blank=True)
     sexe = models.CharField(choices = SEXES, max_length=3)
     types = models.CharField(choices = TYPES, max_length=11)
     price = models.IntegerField(default=2000)
@@ -112,35 +119,54 @@ class Product(models.Model):
 
     def __str__(self):
         return self.name
+class Color(models.Model):
+    product = models.ForeignKey(Product,on_delete = models.CASCADE)
+    color = ColorField()
+    def __str__(self):
+        return self.product.name+" "+self.color
 
 class Product_images(models.Model):
     product = models.ForeignKey(Product,on_delete = models.CASCADE)
     image = models.ImageField(upload_to="product-images/")
+    def __str__(self):
+        return self.product.name
 
 class Commande(models.Model):
-    product = models.ForeignKey(Product, on_delete = models.PROTECT)
-    size = models.CharField(max_length=3)
     nom = models.CharField(max_length=50)
     prénom = models.CharField(max_length=50)
     wilaya = models.CharField(choices= WILAYAS,max_length=2)
     ville = models.CharField(max_length=30)
-    adresse = models.TextField(max_length=100)
+    adresse = models.TextField(max_length=100,null=True,blank=True)
+    domicile = models.BooleanField(default=False)
     numero = PhoneNumberField(region="DZ")
     date = models.DateTimeField(auto_now_add=True, blank=True)
     optionel = models.TextField(max_length=100,null=True,blank=True)
-    selled = models.DecimalField(max_digits=7,decimal_places=0)
+    selled = models.BooleanField(default=False)
+    def __str__(self):
+        return str(self.nom)+" "+str(self.prénom)+" "+str(self.date)+" "+str(self.id)
+class To_order(models.Model):
+    commande = models.ForeignKey(Commande, on_delete = models.CASCADE)
+    product = models.ForeignKey(Product, on_delete = models.DO_NOTHING)
+    size = models.CharField(max_length=3)
+    color = ColorField()
+    quantite = models.IntegerField(default=1,null=False,blank=False)
+    def __str__(self):
+        return str(self.commande)+" "+str(self.product)
 
 class Email(models.Model):
+    date = models.DateTimeField(auto_now_add=True, blank=True, null=True)
     email = models.EmailField(max_length=254)
     def __str__(self):
-        return self.email
+        return str(self.email)
 
 class Shipping_Price(models.Model):
-    price = models.IntegerField(default=400)
+    price_domicile = models.IntegerField(default=600)
+    price_bureau = models.IntegerField(default=400)
+    wilaya = models.CharField(choices=WILAYAS,max_length=2,primary_key=True)
     def __str__(self):
-        return str(self.price) + " DA"
+        return str(self.wilaya)
     
-    def save(self, *args, **kwargs):
+    """def save(self, *args, **kwargs):
         if not self.pk and Shipping_Price.objects.exists():
             raise ValidationError("Il ne peut y avoir qu'un seul prix de livraison à la fois. La3iyid 0552 79 66 23 ")
-        return super(Shipping_Price, self).save(*args, **kwargs)
+        return super(Shipping_Price, self).save(*args, **kwargs)"""

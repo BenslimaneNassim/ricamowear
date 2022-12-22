@@ -1,377 +1,233 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
+{% extends 'ricamo/base.html' %}
     {% load static %}
-  <meta charset="utf-8">
-  <meta content="width=device-width, initial-scale=1.0" name="viewport">
-
-  <title>RicamoWear Oficial Website</title>
-  <meta content="" name="description">
-  <meta content="" name="keywords">
-
-  <!-- Favicons -->
-  <link href="{% static 'img/logo.jpg' %}" rel="icon">
-  <link href="{% static 'img/apple-touch-icon.png' %}" rel="apple-touch-icon">
-
-  <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,700,700i|Poppins:300,400,500,700" rel="stylesheet">
-
-  <!-- Vendor CSS Files -->
-  <link href="{% static 'vendor/aos/aos.css' %}" rel="stylesheet">
-  <link href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
-  <link href="{% static 'vendor/bootstrap-icons/bootstrap-icons.css' %}" rel="stylesheet">
-  <link href="{% static 'vendor/boxicons/css/boxicons.min.css' %}" rel="stylesheet">
-  <link href="{% static 'vendor/glightbox/css/glightbox.min.css' %}" rel="stylesheet">
-  <link href="{% static 'vendor/swiper/swiper-bundle.min.css' %}" rel="stylesheet">
-
-  <!-- Template Main CSS File -->
-  <link href="{% static 'css/style.css' %}" rel="stylesheet">
-  <style>
-      .contains-it{
-        display:flex;
-      }
-      @media (max-width:1000px){
-        .part-1-contains{
-          margin-top:20%!important;
-        }
-        .contains-it{
-          display:block;
-        }
-        .deuxieme{
-          width:100%!important;
-        }
-        form{
-          width:95%!important;
-        }
-        h5{
-          font-size:13px;
-        }
-      }
-      .wilaya-input{
-        margin-left:20px;
-        font-family:Work sans-serif;
-        padding-top:20px;
-        padding-bottom:20px;
-        padding-left:40px;
-        padding-right:40px;
-      }
-      .commande-input{
-        font-family:Work sans-serif;
-        border:0;
-        padding-top:20px;
-        padding-bottom:20px;
-        padding-left:40px;
-        padding-right:40px;
-      }
-      .commande-optionel-input{
-        font-family:Work sans-serif;
-        border:0;
-        padding-top:60px;
-        padding-bottom:60px;
-        padding-left:30px;
-        padding-right:60px;
-        overflow-y:scroll;
-      }
-      
-  </style>
-</head>
-
-<body>
-        <div id="id01" class="modal">
-                <button style="margin-right:20px;text-decoration:none;background: transparent;border:0;padding:0;margin:0; float:right;" onclick="document.getElementById('id01').style.display='none'"><i style="font-size:35px;" class="bi bi-x"></i></button><!--dayi a zbou b-->
-                <form action="" method="POST">{% csrf_token %}
-              
-                  <div class="search-container">
-        
-                    
-                    <input style="margin-right: 0;" type="text" placeholder="Recherche" name="search" required>     
-                           
-                    <button style="text-decoration:none;background: transparent;border:0;padding:0;margin-left:0;width:20px;" type="submit"><i style="margin-right:10px" class="bi bi-search"></i></button>
-        
-        
-                    
-                  </div>
-                  <hr style="width: 80%;">
-                  
-                </form>
-              </div>
-  <!-- ======= Header ======= -->
-  <header id="header" class="fixed-top d-flex align-items-center header-transparent">
-      <div class="container d-flex justify-content-between align-items-center" style="max-width:100%; margin-top:25px">
-  
-        
-  
-        <nav id="navbar" class="navbar">
-          <ul>
-            <li><a class="nav-link scrollto active" href="{% url 'index'%}">Home</a></li>
-            <li><a class="nav-link scrollto" href="{% url 'brand'%}">About Us</a></li>
-            <li class="dropdown"><a href="#"><span>Catégories</span> <i class="bi bi-chevron-down"></i></a>
-              <ul>
-                <li class="dropdown"><a href="#">Accessories</a>
-                  <ul>
-                      {% for acc in acc_categories %}{% with accessories="Accessories" %}
-                      <li><a href="{% url 'category' accessories acc %}">{{acc}}</a></li>{% endwith %}
-                      {% endfor %}
-                    </ul>
-                </li>
-                <li class="dropdown"><a href="#"><span>Cloths</span> <i class="bi bi-chevron-right"></i></a>
-                  <ul>
-                    {% for clo in clo_categories %}{% with cloths="Cloths" %}
-                    <li><a href="{% url 'category' cloths clo %}">{{clo}}</a></li>{% endwith %}
-                    {% endfor %}
-                  </ul>
-                </li>
-              </ul>
-            </li>
-            <li class="dropdown"><a href="{% url 'design' %}"><span>Designs</span> <i class="bi bi-chevron-down"></i></a>
-              <ul>
-                <li><a href="{% url 'design' %}">All</a></li>
-                {% for design in designs_link %}
-                <li><a href="{% url 'product' design.1.name %}">{{design.0.name}}</a></li>
-                {% endfor %}            
-              </ul>
-            </li>
-            <li><a class="nav-link scrollto" href="#footer">Contact</a></li>
-          </ul>
-          <i class="bi bi-list mobile-nav-toggle" style="text-align:left"></i>
-        </nav><!-- .navbar -->
-  
-        <div id="logo">
-          <!--<a href="{% url 'index'%}"><img src="{% static % 'img/logo.png' }" alt=""></a>  -->
-          <!-- Uncomment below if you prefer to use a text logo -->
-          <h1 class="special-ricamo"><a href="{% url 'index'%}">ricamo wear</a></h1>
-        </div>
-        <nav id="navbar" class="navbar">
-          <div style="display:flex">
-          <button style="text-decoration:none;background: transparent;border:0;padding:0;margin:0;" onclick="document.getElementById('id01').style.display='block'"><i style="margin-right:10px" class="bi bi-search mobile-nav-toggle"></i></button><!--dayi a zbou b-->
-          <!--<i style="margin-left:10px" class="bi bi-cart mobile-nav-toggle"></i>-->
-          </div>
-        </nav>
-      </div>
-      
-    </header><!-- End Header -->
-        
           
-
+{% block main %}
   <main id="main">
     {% if success %}
-      <section>
-        <container>
-          <div class="justify-content-center" style="text-align:center;margin-top: 10%">
-            <h5 style="text-align:center"> {{success}} </h5>
-          </div>
-        </container>
-      </section>
-      <section>
-    {% else %}
-          {% if price %}
-          <div class="container" style="margin-top: 5%;">
-              <div class="justify-content-center part-1-contains" style="margin-top:10%"><h5 style="text-align:center">Confirmer La Commande (3/3)</h5></div>
+      {% include 'ricamo/success.html' %}   
 
-           <div class="justify-content-center" style="width:100%;text-align:center;">
-              <form action="" method="POST">{% csrf_token %}
-                <h5>Destinataire : {{nom}} {{prenom}} </h5>
-                 <h5>Produit : {{product}} {{size}} </h5>
-               <h5>Wilaya : {{wilaya}} </h5>
-               <h5>Prix Total : {{price}} </h5>
-               <select name="price" style="display:none;">
-                <option value="{{price}}"> {{price}} </option>
-               </select>
-               <select name="size" style="display:none;">
-                  <option value="{{size}}"> {{size}} </option>
-                 </select>
-               <select name="nom" style="display:none;">
-                  <option value="{{nom}}"> {{nom}} </option>
-                 </select>
-                 <select name="prénom" style="display:none;">
-                    <option value="{{prenom}}"> {{prenom}} </option>
-                   </select>
-                   <select name="wilaya" style="display:none;">
-                      <option value="{{wilaya}}"> {{wilaya}} </option>
-                     </select>
-                     <select name="ville" style="display:none;">
-                        <option value="{{ville}}"> {{ville}} </option>
-                       </select>
-                       <select name="adresse" style="display:none;">
-                          <option value="{{adresse}}"> {{adresse}} </option>
-                         </select>
-                         <select name="numero" style="display:none;">
-                            <option value="{{numero}}"> {{numero}} </option>
-                           </select>
-                           <select name="optionel" style="display:none;">
-                              <option value="{{optionel}}"> {{optionel}} </option>
-                             </select>
-               <br><br><button type="submit" class="btn-suivantt">Passer La Commande</button><br><br><br>        
-              </form>
-        
-            </div>
+    {% elif shipping_method %}
+      {% include 'ricamo/confirmer-commande.html' %}
 
-          </div>
+    {% elif total %}
+      {% include 'ricamo/infos-client.html' %}
 
-
-          {% elif size %}
-          <div id="part-2" class="container justify-content-center" style="margin-top:5%;"><br>
-                <div class="justify-content-center" style="margin-top:5%"><h5 style="text-align:center">Vos Informations (2/3)</h5></div>
-                <div class="row justify-content-around contains-it">
-                    <form style="width:50%;text-align:center" action="" method="post" enctype="multipart/form-data">{% csrf_token %}
-                      {{ form.nom }}<hr style="width:254px"><br>
-                      {{ form.prénom }}<hr style="width:254px"><br>
-                      <label style="font-family: Work sans-serif">Wilaya  : </label>
-                      <select class="wilaya-input" name="wilaya" for="wilaya" placeholder="Wilaya">
-                        {% for wilaya in wilayas %}
-                        <option value="{{wilaya}}">{{wilaya}}</option>
-                        {% endfor %}
-                      </select>
-                      {{ form.wilaya }}<hr style="width:254px"><br>
-                      {{ form.ville }}<hr style="width:254px"><br>
-                      {{ form.adresse }}<hr style="width:254px"><br>
-                      {{ form.numero }}<hr style="width:254px"><br>
-                      {{ form.optionel }}<hr style="width:254px"><br>
-                      <select style="display:none" name="size" for="size">
-                        <option value="{{ size }}">{{ size }}</option>
-                      </select>
-         
-    
-    
-                    <br><div style="display: inline-block" class="g-recaptcha" data-sitekey="6LdxrLsgAAAAACqIeBDQha0kq2SynXXuv1j3_Kes"></div><br><br><button type="submit" class="btn-suivantt">Suivant</button>
-                    </form>
-                    <div class="deuxieme" style="width:50%;text-align: center">
-
-                      <p style="font-family: RothekExtraLight">
-                        NOTE : </p><p style="font-family: RothekExtraLight">La livraison se fait via DZ-RAPID dans un délais de quelques jours
-                        Votre colis va etre livré au bureau DZ-RAPID correspendant à votre emplacelement.
-                        <br><br> {% if not product.free_shipping %} <b>La Livraison hors Béjaia coute {{shipping.price}} DA</b><br><b>La Livraison à Béjaia Ville est Gratuite </b>{% else %}<b>La Livraison est Gratuite pour ce produit</b>{% endif %}
-                      </p>
-                      <br>
-                      <h5 style="border:0;padding-top:10px;padding-bottom:10px;padding-left:40px;padding-right:40px;font-family:RothekExtraLight">Produit : {{product}} {{size}} </h5>
-                      <h5 style="border:0;padding-top:10px;padding-bottom:10px;padding-left:40px;padding-right:40px;font-family:RothekExtraLight">Prix : {% if product.discounted_price %} <del>{{product.price}}</del> {{product.discounted_price}} {% else %} {{product.price}}{% endif %} DA</h5>
-                      <h5 style="border:0;padding-top:10px;padding-bottom:10px;padding-left:40px;padding-right:40px;font-family:RothekExtraLight">Prix Livraison : {% if not product.free_shipping %}{{shipping.price}}{% else %} 0 {%endif%} DA</h5>
-
-                    </div>
-                </div>
-                
-                
-          </div>
-
-          {% else %}
-          <div id="part-1" class="container" style="margin-top:5%;">
-              <div class="justify-content-center part-1-contains" style="margin-top:10%"><h5 style="text-align:center">Informations sur le produit (1/3)</h5></div>
-              <div class="d-flex justify-content-center">
-                    <div style="flex-basis:40%">
-                            <h5 style="font-family:RothekExtraLight">Produit</h5>
-                        </div>
-                        <div style="flex-basis:20%">
-                            <h5 style="font-family:RothekExtraLight">Prix</h5>
-                        </div>
-                        <div style="flex-basis:20%">
-                            <h5 style="font-family:RothekExtraLight">Taille</h5>
-                        </div>
-                        <div style="flex-basis:20%">
-                            <h5 style="font-family:RothekExtraLight">Quantité</h5>
-                        </div>
-              </div>
-              <hr style="width:100%;">
-              <form action="" method="post" enctype="multipart/form-data">
-              <div class="d-flex justify-content-center">
-                  
-                    {% csrf_token %}
-                  <div style="flex-basis:40%">
-                      <img style="width: 20%;" src="{{product.image.url}}">
-                      <h5 style="display: inline-block;font-family: RothekExtraLight;"> {{product.name}} | {{product.category}} </h5>
-                  </div>
-                  <div style="flex-basis:20%">
-                      <h5 style="font-family:RothekExtraLight"> {% if product.discounted_price %} {{product.discounted_price}} {% else %} {{product.price}} {% endif %} DA</h5>
-                  </div>
-                  <div style="flex-basis:20%">
-                      <h5 style="font-family:RothekExtraLight">
-                        <select name="size" for="size">
-                            {% if product.s_size %}<option value="S">S</option>{% endif %}
-                            {% if product.m_size %}<option value="M">M</option>{% endif %}
-                            {% if product.l_size %}<option value="L">L</option>{% endif %}
-                            {% if product.xl_size %}<option value="XL">XL</option>{% endif %}
-                            {% if product.xxl_size %}<option value="XXL">XXL</option>{% endif %}
-                        </select>
-                      </h5>
-                  </div>
-                  <div style="flex-basis:20%">
-                      <h5 style="font-family:RothekExtraLight">1</h5>
-                  </div>
-                  
-
-                  
-              </div>
-              
-              <div class="d-flex justify-content-center" style="margin-top: 10%;">
-                    <button type="submit" class="btn-suivantt">Suivant</button>
-              </div>
-              
-            </form>
-          </div>
-          {% endif %}
+    {% elif tab %}
+      {% include 'ricamo/infos-produit.html' %}
+    {% endif %}
           
-      </section>
-      {% endif %}<br><br><br>
   </main><!-- End #main -->
-  <footer id="footer">
-      <div class="footer-top">
-        <div class="container">
-            <div class="row justify-content-around d-flex">
-              <div class="col-lg-4 col-md-5" style="margin-bottom:25px;">
-  
-                <h6 class="footer-title">Subscribe to our Newsletter !</h6>
-                <form class="d-flex">
-                  <input style="margin-right: 0;width:80%" type="text" placeholder="Enter Email" name="email" required>     
-                  <button type="submit"><i class="bi bi-arrow-right"></i></button>
-                </form>
-                <hr style="width: 85%;float: left">
-              </div>
-              <div class="col-lg-4 col-md-5" style="margin-bottom:25px;">
-                  <h6 class="footer-title d-flex justify-content-center">Follow us</h6><br>
-                  <div class="d-flex  justify-content-center justify-content-around">
-                    <a target="blank" href="https://www.facebook.com/ricamowear/"><i style="font-size:22px;" class="bi bi-facebook"></i></a>
-                    <a target="blank" href="https://www.instagram.com/ricamowear/"><i style="font-size:22px;" class="bi bi-instagram"></i></a>
-                    <a target="blank" href="https://www.tiktok.com/@ricamowear"><i style="font-size:22px;" class="bi bi-tiktok"></i></a>
-                    <a target="blank" href="https://mail.google.com/mail/u/0/?fs=1&to=ricamowear@gmail.com&tf=cm"><i style="font-size:22px;" class="bi bi-google"></i></a>
-  
-  
-                  </div>
-              </div>
-              <div class="col-lg-4 col-md-5" style="margin-bottom:25px;">
-                  <h6 class="footer-title d-flex justify-content-center">Website Developper</h6>
-                  <a class="d-flex justify-content-center" target="blank" href="https://benslimanenassim.github.io/"><h6>Benslimane Nassim</h6></a>
-                </div>
-            </div>
-        </div>
-      </div>
-  
-      <div class="container">
-        <div class="copyright">
-          &copy; Copyright <strong>RicamoWear</strong>. All Rights Reserved
-        </div>
-        <div class="credits">
-        </div>
-      </div>
-    </footer><!-- End Footer -->
+  {% endblock %}
 
-  <!-- ======= Footer ======= -->
-  
-  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
-
-  <!-- Vendor JS Files -->
-  <script src="{% static 'vendor/purecounter/purecounter.js' %}"></script>
-  <script src="{% static 'vendor/aos/aos.js' %}"></script>
-  <script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
-  <script src="{% static 'vendor/glightbox/js/glightbox.min.js' %}"></script>
-  <script src="{% static 'vendor/isotope-layout/isotope.pkgd.min.js' %}"></script>
-  <script src="{% static 'vendor/swiper/swiper-bundle.min.js' %}"></script>
-  <script src="{% static 'vendor/php-email-form/validate.js' %}"></script>
-  <!-- Template Main JS File -->
-  <script src="{% static 'js/main.js' %}"></script>
-
+  {% block scripts %}
   <script src="https://www.google.com/recaptcha/api.js" async defer></script>
-  
+  <script>
+    document.getElementById('header').classList.remove('header-transparent');
+    document.getElementById('header').classList.add('header-scrolled');
+    function total_buy(){
+      var total=0;
+      {% for t in tab %}
+        total = total+parseInt({{t.2}})*parseInt({% if t.0.discounted_price %}{{t.0.discounted_price}}{% else %}{{t.0.price}}{% endif %});
+      {% endfor %}
+      
+      document.getElementById("checkout-total").innerHTML="Total: "+total.toString()+" DA";
+    }
+    
+    var table_pm = document.getElementsByClassName("table-wrapper");
+    if (document.getElementById("checkout-total")){
+      total_buy();
+    }
+      for (const taz of table_pm){
+        taz.addEventListener("click",changequant);
+      }
+    function changequant(taz){
+      zeb = taz.target;
+      if (zeb.classList.contains("minus-quantitee")){
+        minusss(zeb);
+      }else if(zeb.classList.contains("plus-quantitee")){
+        adddd(zeb);
+      }
+    }
+    function minusss(zeb){
+      var sewa = parseInt(zeb.nextElementSibling.innerHTML) -1;
+      if (sewa == 0){
+        var parent = zeb.parentElement.parentElement.parentElement;
+        var bro = parent.previousElementSibling;
+        parent.remove();
+        bro.remove();
+      }else{
+        zeb.nextElementSibling.innerHTML = sewa;
+      }
+      var prix = parseInt(slicefromfirst(zeb.parentElement.previousElementSibling.previousElementSibling.previousElementSibling.firstElementChild.innerHTML," "));
+      var total = parseInt(slicefromfirst(sliceit(document.getElementById("checkout-total").innerHTML," ")," "));
+      total = total-prix;
+      document.getElementById("checkout-total").innerHTML="Total: "+total.toString()+" DA";
 
-</body>
+    }
+    function adddd(zeb){
+      var prix = parseInt(slicefromfirst(zeb.parentElement.previousElementSibling.previousElementSibling.previousElementSibling.firstElementChild.innerHTML," "));
+      var total = parseInt(slicefromfirst(sliceit(document.getElementById("checkout-total").innerHTML," ")," "));
+      total = total+prix;
+      document.getElementById("checkout-total").innerHTML="Total: "+total.toString()+" DA";
+      var sewa = parseInt(zeb.previousElementSibling.innerHTML) +1;  
+      zeb.previousElementSibling.innerHTML = sewa;
+    }
+    var ftc = document.getElementById("final-total-checkout");
+    if(ftc){
+      ftc.addEventListener("submit", final_total_checkout);
+    }
+    function final_total_checkout(){
+      tab=[]
+      var zebs = document.getElementsByClassName("table-wrapper");
+      for (zeb of zebs){
+        var t =[];
+        t.push(zeb.firstElementChild.firstElementChild.innerHTML);
+        t.push(zeb.firstElementChild.nextElementSibling.firstElementChild.nextElementSibling.firstElementChild.innerHTML);
+        t.push(zeb.lastElementChild.lastElementChild.firstElementChild.nextElementSibling.innerHTML);
+        t.push(zeb.lastElementChild.lastElementChild.previousElementSibling.firstElementChild.innerHTML);
+        tab.push(t);
+      }
+      var jasonized = JSON.stringify(tab);
+      document.getElementById("input-cart-final").value=jasonized;
+    }
+    var select_field = document.getElementById("id_wilaya");
+    var liv_price = 0;
+    var total_koulech = 0;
+    var domicile_price = 0;
+    var bureau_price = 0;
+    var total=0;
+    if (select_field){
+      select_field.addEventListener("change",changeship);
+      select_field.children[16].selected=true;
+      {% for ship in shipps %}
+        if({{ship.wilaya}}=="16"){
+          domicile_price = parseInt({{ship.price_domicile}});
+          bureau_price = parseInt({{ship.price_bureau}});
+          liv_price = domicile_price;
+          total = parseInt({{total}})+liv_price;
+          document.getElementById("liv-price").innerHTML = "Livraison: "+liv_price.toString()+" DA";
+          document.getElementById("total-koulech").innerHTML = "Total: "+total.toString()+" DA";
+        }
+      {% endfor %}
+    }
+    var ship_wrapper = document.getElementById("shipping-method-wrapper");
+    
+    if(ship_wrapper){
+      ship_wrapper.addEventListener("click",changeshipmethod);
+      document.getElementsByClassName("shipping-method")[0].classList.add("method-selected");
+    }
+    function changeship(){
+      {% for ship in shipps %}
+        if(select_field.value =={{ship.wilaya}}){
+          domicile_price = parseInt({{ship.price_domicile}});
+          bureau_price = parseInt({{ship.price_bureau}});
+          var method = document.getElementsByClassName("method-selected")[0];
+          if(method.id=="domicile"){
+            liv_price=domicile_price;
+            document.getElementById("liv-price").innerHTML = "Livraison: "+liv_price.toString()+" DA";
+          }else{
+            liv_price=bureau_price;
+            document.getElementById("liv-price").innerHTML = "Livraison: "+liv_price.toString()+" DA";
+          }
+          total = parseInt({{total}})+liv_price;
+          document.getElementById("total-koulech").innerHTML = "Total: "+total+" DA";
+        }
+      {% endfor %}
+    }
+    function changeshipmethod(ship_wrapper){
+      
+      var tar = ship_wrapper.target;
 
-</html>
+      if (tar.id=="domicile"){
+        if(!tar.classList.contains("method-selected")){
+          tar.nextElementSibling.classList.remove("method-selected");
+          tar.classList.add("method-selected");
+          total = total-liv_price+domicile_price;
+          liv_price = domicile_price;
+          document.getElementById("liv-price").innerHTML = "Livraison: "+liv_price.toString()+" DA";
+          document.getElementById("total-koulech").innerHTML = "Total: "+total+" DA";
+        }
+      }else if(tar.id=="bureau"){
+        if(!tar.classList.contains("method-selected")){
+          tar.previousElementSibling.classList.remove("method-selected");
+          tar.classList.add("method-selected");
+          total = total-liv_price+bureau_price;
+          liv_price = bureau_price;
+          document.getElementById("liv-price").innerHTML = "Livraison: "+liv_price.toString()+" DA";
+          document.getElementById("total-koulech").innerHTML = "Total: "+total+" DA";
+
+        }
+      }      
+    }
+    {% if total %}
+        var finalform = document.getElementById("form-final");
+        if (finalform){
+          finalform.addEventListener("submit",submitfinalform);
+        }
+        function submitfinalform(){
+          var tab = [];
+          /*tab.push({{tab.0.id}});
+          tab.push({{tab.1}});
+          tab.push({{tab.2}});
+          tab.push({{tab.3}});*/
+          var ta=[];
+          {% for t in tab %}
+              ta=[];
+              ta.push({{t.0.id}});
+              ta.push("{{t.1}}");
+              ta.push({{t.2}});
+              ta.push("{{t.3}}");
+              tab.push(ta)
+          {% endfor %}
+          var total ={{total}};
+          var domici = document.getElementsByClassName("method-selected")[0].id;
+          var the_tab = [];
+          the_tab.push(tab);
+          the_tab.push(total);
+          the_tab.push(domici);
+
+          var jasonizedd = JSON.stringify(the_tab);
+          document.getElementById("finalcart-total").value=jasonizedd;
+        }
+    {% endif %}
+    {% if shipping_method %}
+        var last_form = document.getElementById("last-job-form-confirm");
+        last_form.addEventListener("submit", lastjob);
+        function lastjob(){
+          var inp = document.getElementById("last-job-input");
+          var the_tab =[];
+          var tab=[];
+          var ta=[];
+          {% for t in tab %}
+              ta=[];
+              ta.push({{t.0.id}});
+              ta.push("{{t.1}}");
+              ta.push({{t.2}});
+              ta.push("{{t.3}}");
+              tab.push(ta)
+          {% endfor %}
+          var total ={{total}};
+          var methodliv = "{{shipping_method}}";
+          var the_tab = [];
+          the_tab.push(tab);
+          the_tab.push(methodliv);
+          the_tab.push(total);
+          the_tab.push("{{nom}}");
+          the_tab.push("{{prenom}}");
+          the_tab.push("{{wilaya}}");
+          the_tab.push("{{ville}}");
+          the_tab.push("{{adresse}}");
+          the_tab.push("{{numero}}");
+          the_tab.push("{{optionel}}");
+          var jasonizedd = JSON.stringify(the_tab);
+          inp.value=jasonizedd;
+        }
+    {% endif %}
+    function gotohome(){
+      window.location.href="{% url 'index' %}"
+    }
+
+
+
+  </script>
+{% endblock %}
