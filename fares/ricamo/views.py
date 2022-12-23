@@ -12,6 +12,7 @@ from .helpers import *
 
 
 
+
 def index(request):
     context = context_help(request)
     nb_satisfied_clients = len(Commande.objects.all())+15    
@@ -210,3 +211,6 @@ def mail_handle(request):
             context = email(request,context)
     return redirect(index)
 
+def customnotfound(request, exception):
+    context = context_help(request)
+    return render(request, "ricamo/404.html",context)
