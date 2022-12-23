@@ -75,19 +75,19 @@
                                     <form id="buy-now-form" action="{% url 'checkout' %}" method="get">
                                       <input id="buy-now-input" type="hidden" name="buy-now">
                                       <button type="submit" class="buy-now" style="margin-top: 15px;">BUY NOW</button>
-                                    <button onclick="addtocart()" style="margin-top:5px;" class="buy-now">Add To Cart</button><br><br><br>
+                                    <button type="button" onclick="addtocart()" style="margin-top:5px;" class="buy-now">Add To Cart</button><br><br><br>
 
                                     <div class="d-flex justify-content-between">
-                                      <button onclick="showdescription()" class="roh-froutt">
+                                      <button type="button" onclick="showdescription()" class="roh-froutt">
                                         <h5 class="h5-product to-select-1">Description</h5>
                                       </button>
                                       {% if product.note %}
-                                      <button onclick="shownote()" class="roh-froutt">
+                                      <button type="button" onclick="shownote()" class="roh-froutt">
                                         <h5 class="h5-product to-select-2">Note</h5>
                                       </button>
                                       {% endif %}
                                       {% if product.care %}
-                                      <button onclick="showcare()" class="roh-froutt">
+                                      <button type="button" onclick="showcare()" class="roh-froutt">
                                         <h5 class="h5-product to-select-3">Care</h5>
                                       </button>
                                       {% endif %}
