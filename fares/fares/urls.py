@@ -22,3 +22,5 @@ urlpatterns = [
     path('',include('ricamo.urls')),
     path('admin/', admin.site.urls),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+handler404 = 'ricamo.views.customnotfound'
+handler500= 'ricamo.views.customserver'
