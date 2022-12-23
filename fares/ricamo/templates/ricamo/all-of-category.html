@@ -2,11 +2,11 @@
     {% load static %}
 {% block hero %}
           <!-- ======= Hero Section ======= -->
-          <section id="hero" style="height: 35vh;background: url({{category.image.url}}) center;background-size: cover;
+          <section id="hero" style="height: 35vh;background: url({% if category %}{{category.image.url}}{% else %}{% static 'img/Sweater.jpg' %}{% endif %}) center;background-size: cover;
           position: relative;">
             <div class="hero-container" data-aos="zoom-in" data-aos-delay="100">
               
-              <h1 style="font-family : RothekExtraLight; color : #fff"> {{category.name}} </h1>
+              <h1 style="font-family : RothekExtraLight; color : #fff"> {% if category %} {{category.name}} {% else %} Products {% endif %} </h1>
             </div>
           </section><!-- End Hero Section -->
 {% endblock %}
@@ -16,25 +16,12 @@
               <section id="team">
                   <div class="container" data-aos="fade-up">
                               <div class="section-header">
-                                <h3 class="section-title">{% if category %}All {{category.name}}s {% endif %} </h3>          <hr>
+                                <h3 class="section-title">All{% if category %} {{category.name}}s {% else %} Products {% endif %} </h3>          <hr>
             
                               </div>
             
                     
-                    <!--<div class="row">
-                      {% for design in designs %}
-                      <div class="col-lg-4 col-md-5 col-sm-4 col-6">
-                        <a style="color:black" href="{% url 'product' design.1.name %}"><div class="member" data-aos="fade" data-aos-delay="100">
-                          <div class="pic"><img src="{{design.0.image.url}}" alt=""></div>
-                          <h4>{{design.0.name}} | {{design.1.category}}</h4>
-                          <span>{{design.1.price}} DA</span>
-                          
-                        </div></a>
-                      </div>
-                      {% endfor %}
-
-                      
-                    </div>-->
+                    
                     <div class="row">
                         {% for product in products %}
                         <div class="col-lg-4 col-md-5 col-sm-4 col-6">

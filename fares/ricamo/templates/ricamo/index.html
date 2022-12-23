@@ -59,6 +59,12 @@
           </div>
   
           {% endfor %}
+          <div class="image-container-container col-sm-6 d-flex justify-content-center">
+            <div class="image-container d-flex justify-content-center"  style="background-image:linear-gradient(to bottom, rgba(0,0,0,0.4) 0%,rgba(0,0,0,0.7) 100%),url('{% static 'img/Sweater.jpg' %}');">
+              <span class="category-describer">All Products</span>{% with all='all' %}
+              <a class="appear-button" href="{% url 'category' all %}" >View</a>{% endwith %}
+            </div>
+          </div>
           
       </div>
 
