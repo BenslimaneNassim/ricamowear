@@ -50,7 +50,7 @@
                             <div class="product-description">
                                     
                                     <h3 style="font-weight:300">{{product.name}} | {{product.category}}</h3>
-                                    <h3 class="price">{% if product.discounted_price %}<del>{{product.price}} DA</del> {{product.discounted_price}} {% else %} {{product.price}} {% endif %}  DA </h3><br><br>
+                                    <h3 class="price price-col">{% if product.discounted_price %}<del>{{product.price}} DA</del> {{product.discounted_price}} {% else %} {{product.price}} {% endif %}  DA </h3><br><br>
                                     <h5 style="font-weight: 400;font-size: 18px">Select a Color</h5>
                                     <div id="select-a-color" class="price select-a-color">
                                       {% for color in colors %}
@@ -143,7 +143,7 @@
                         <div class="sticky-shit">
                             <div class="product-description" style="padding-right:10px;padding-left:10px;">
                                 <h3 style="font-weight:300">{{product.name}} | {{product.category}}</h3>
-                                <h3 class="price">{% if product.discounted_price %}<del>{{product.price}} DA</del> {{product.discounted_price}} {% else %} {{product.price}} {% endif %}  DA </h3><br><br>
+                                <h3 class="price price-col">{% if product.discounted_price %}<del>{{product.price}} DA</del> {{product.discounted_price}} {% else %} {{product.price}} {% endif %}  DA </h3><br><br>
                                 <h5 style="font-weight: 400;font-size: 18px">Select a Color</h5>
                                 <div id="select-a-color2" class="price select-a-color">
                                   {% for color in colors %}
