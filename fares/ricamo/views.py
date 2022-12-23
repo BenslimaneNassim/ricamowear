@@ -214,3 +214,6 @@ def mail_handle(request):
 def customnotfound(request, exception):
     context = context_help(request)
     return render(request, "ricamo/404.html",context)
+def customserver(request):
+    context = context_help(request)
+    return render(request, "ricamo/500.html",context)
