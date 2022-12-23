@@ -86,14 +86,8 @@ WILAYAS = (
 )
 
 
-#class Design(models.Model):
- #   name = models.CharField(max_length=30)
-  #  date_upload = models.DateField(auto_now_add=True, blank=True,null=True)
-   # image = models.ImageField(upload_to="designs/",blank=True,null=True)
-    #def __str__(self):
-     #   return self.name
 class Category(models.Model):
-    name = models.CharField( choices = CATEGORIES, max_length=30)
+    name = models.CharField(max_length=30)
     image = models.ImageField(upload_to="category-images-display/")
     def __str__(self):
         return self.name

@@ -56,109 +56,6 @@ def product(request, product_name):
 
 
 
-def checkout_cart(request):
-    context = context_help(request)
-    return render(request,"ricamo/checkout.html",context)
-
-"""def checkoutt(request):
-    context = context_help(request)    
-    if request.method == "POST":
-        print("zebiiiiii")
-        if(request.POST.get('buy-now')):
-            tab = json.loads(request.POST.get('buy-now'))
-            print(tab)
-        
-        elif (request.POST.get('nom') == None) and request.POST.get('size') : # reception infos produit display infos client
-            print("2 is comin")
-            form = CommandeForm()
-            product = Product.objects.get(name=product_name)
-            size = request.POST.get('size')
-            shipping = Shipping_Price.objects.first()
-            all_wilayas = WILAYAS
-            wilayas = []
-            for a_wilaya in all_wilayas:
-                wilayas.append(a_wilaya[0])
-            context={'product':product,'size':size,'form':form,'shipping':shipping,'wilayas':wilayas}
-            return render(request,"ricamo/checkout.html",context)
-
-        elif request.POST.get('price')== None: # reception 2/3 infos client display 3/3 confirmer commande
-            
-            form = CommandeForm(request.POST)
-            if form.is_valid():
-                recaptcha_response = request.POST.get('g-recaptcha-response')
-                url='https://www.google.com/recaptcha/api/siteverify'
-                values = {
-                    'secret': settings.GOOGLE_RECAPTCHA_SECRET_KEY,
-                    'response': recaptcha_response
-                }
-                data = urllib.parse.urlencode(values).encode()
-                req = urllib.request.Request(url, data=data)
-                response = urllib.request.urlopen(req)
-                result = json.loads(response.read().decode())
-                print("form is valid")
-
-                if result['success']:
-                    #####
-                    print("success")
-                    size = request.POST.get('size')
-                    product = Product.objects.get(name=product_name)
-                    nom = request.POST.get('nom')
-                    prenom = request.POST.get('prénom')
-                    wilaya = request.POST.get('wilaya')
-                    ville = request.POST.get('ville')
-                    adresse = request.POST.get('adresse')
-                    numero = request.POST.get('numero')
-                    optionel = request.POST.get('optionel')
-                    print(wilaya)
-                    
-                    ship_price = Shipping_Price.objects.first()
-                    if product.discounted_price :
-                        price = int(product.discounted_price)
-                    else:
-                        price = int(product.price)
-                    if wilaya != "06" and not product.free_shipping :
-                        price = price + int(ship_price.price)
-                    print(price)
-                    context.update({'price':price,'product':product,'size':size,'nom':nom,'prenom':prenom,'wilaya':wilaya,'ville':ville,'adresse':adresse,'numero':numero,'optionel':optionel})
-                    return render(request,"ricamo/success.html",context)
-                    
-
-                else:
-                    print('ittnak recaptcha fail')
-            else:
-                print(form.errors.as_data())
-        else:# Commande passée
-                    print("3")
-                    size = request.POST.get('size')
-                    product = Product.objects.get(name=product_name)
-                    nom = request.POST.get('nom')
-                    prenom = request.POST.get('prénom')
-                    wilaya = request.POST.get('wilaya')
-                    ville = request.POST.get('ville')
-                    adresse = request.POST.get('adresse')
-                    numero = request.POST.get('numero')
-                    optionel = request.POST.get('optionel')
-                    selled = request.POST.get('price')
-                    com = Commande()
-                    com.product = product
-                    com.size = size
-                    com.nom = nom
-                    com.prénom = prenom
-                    com.wilaya = wilaya
-                    com.ville = ville
-                    com.adresse = adresse
-                    com.numero = numero
-                    com.optionel = optionel
-                    com.selled = selled
-                    com.save()
-
-                    success_message = 'Votre Commande a été passée'
-                    context.update({'success':success_message})
-                    return render(request,"ricamo/checkout.html",context)
-
-    #product = Product.objects.get(name=product_name)
-    context.update({'product':'product'})
-    return render(request,"ricamo/checkout.html",context)"""
 def checkout(request):
     context = context_help(request)    
     if request.method == "GET":
@@ -288,10 +185,13 @@ def brand(request):
     return render(request,"ricamo/brand.html",context)
 def category(request, category_name):
     context = context_help(request)
-    category = Category.objects.get(name=category_name)
-
-    products = Product.objects.filter(category=category)
-    context.update({'products':products,'category':category})
+    if category_name != 'all':
+        category = Category.objects.get(name=category_name)
+        products = Product.objects.filter(category=category)
+        context.update({'products':products,'category':category})
+    else:
+        products = Product.objects.order_by('-id')
+        context['products']=products
 
     return render(request,"ricamo/all-of-category.html",context)
 
@@ -310,20 +210,3 @@ def mail_handle(request):
             context = email(request,context)
     return redirect(index)
 
-"""
-def design(request):
-    context = context_help(request)
-    all_designs = Design.objects.order_by('-date_upload')
-    designs = []
-    for a_design in all_designs:
-        product = Product.objects.filter(design=a_design)[0]
-        designs.append([a_design,product])
-
-    context.update({'designs':designs})
-    if request.method == "POST":
-        if request.POST.get('email'):
-            context = email(request,context)
-        
-    return render(request,"ricamo/all-of-category.html",context)
-
-"""
