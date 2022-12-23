@@ -75,7 +75,6 @@
                                     <form id="buy-now-form" action="{% url 'checkout' %}" method="get">
                                       <input id="buy-now-input" type="hidden" name="buy-now">
                                       <button type="submit" class="buy-now" style="margin-top: 15px;">BUY NOW</button>
-                                    </form>
                                     <button onclick="addtocart()" style="margin-top:5px;" class="buy-now">Add To Cart</button><br><br><br>
 
                                     <div class="d-flex justify-content-between">
@@ -164,8 +163,10 @@
                                   {% if product.standart_size %} <span class="sizes-dispo">Standart</span>{% endif %}
                                 </div>
                                 
-                                <button onclick="window.location='checkout'" class="buy-now" style="margin-top: 15px;">BUY NOW</button>
-                                <button onclick="addtocart()" style="margin-top:5px;" class="buy-now">Add To Cart</button><br><br><br>
+                                
+                                    <button type="submit" class="buy-now" style="margin-top: 15px;">BUY NOW</button>
+                                </form>
+                              <button onclick="addtocart()" style="margin-top:5px;" class="buy-now">Add To Cart</button><br><br><br>
 
                                 <div class="d-flex justify-content-between">
                                     <button onclick="showdescription()" class="roh-froutt">
