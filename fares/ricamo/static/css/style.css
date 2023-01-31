@@ -259,6 +259,16 @@ body::-webkit-scrollbar-thumb {
   }
 
 @media (max-width: 768px) {
+  #my_wrapper::-webkit-scrollbar-track-piece:end {
+    background: transparent;
+    margin-right: 50px; 
+  }
+  
+  #my_wrapper::-webkit-scrollbar-track-piece:start {
+    background: transparent;
+    margin-left: 50px;
+  }
+  
   .appear-button{
     opacity: 1;
     transition: all .6s ease-in-out;
