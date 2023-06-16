@@ -19,6 +19,10 @@ def index(request):
     products = Product.objects.order_by('-id')[:6]
     context['nb_satisfied'] = nb_satisfied_clients
     context['products'] = products
+    categoriess = Category.objects.all()
+    for category in categoriess:
+        category.nb_products = Product.objects.filter(category=category).count()
+    context['showcategories'] = categoriess
     return render(request,"ricamo/index.html",context)
 def search(request):
     context = context_help(request)
